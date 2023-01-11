@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 import axios from "axios";
+import { useContext } from 'react';
+import { UserContext } from '../App';
 
 const DEFAULT_FORM_OBJECT = {
     name: "",
@@ -14,6 +16,7 @@ const DEFAULT_FORM_OBJECT = {
 
 export const  CreateProduct = () => {
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT)
+    const [user] = useContext(UserContext);
 
     const updateFormValue = (key, value) => {
         setForm({
@@ -24,7 +27,11 @@ export const  CreateProduct = () => {
 
     const createProduct = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:3000/products', form);
+        await axios.post('http://localhost:3000/products', form, {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        });
         setForm(DEFAULT_FORM_OBJECT);
     }
   return (

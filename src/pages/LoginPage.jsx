@@ -16,7 +16,7 @@ const DEFAULT_FORM_OBJECT = {
     password: ""
 };
 
-export const  RegisterPage = () => {
+export const  LoginPage = () => {
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT)
     const [userr, setUser] = useContext(UserContext);
     const navigate = useNavigate()
@@ -28,16 +28,14 @@ export const  RegisterPage = () => {
         })
     };
 
-    const addUser = async (e) => {
+    const loginUser = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:3000/register', form);
         const response = await axios.post('http://localhost:3000/login', form);
         const {token, user} = response.data;
         setUser({
             token,
             user
         });
-        setForm(DEFAULT_FORM_OBJECT);
         {userr && (
             navigate('/view-products')
         )}
@@ -48,8 +46,8 @@ export const  RegisterPage = () => {
         <Row>
             <Col></Col>
             <Col xs={8}>
-            <h2>Register</h2>
-            <Form onSubmit={addUser}>
+            <h2>Login</h2>
+            <Form onSubmit={loginUser}>
             <Form.Group className="mb-3" controlId="formName">
                 <Form.Label>Username : </Form.Label>
                 <Form.Control 
@@ -70,7 +68,7 @@ export const  RegisterPage = () => {
                     value={form.password} />
             </Form.Group>
             <Button variant="primary" type="submit">
-                Register
+                Login
             </Button>
             </Form>
             </Col>
