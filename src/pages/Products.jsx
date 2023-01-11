@@ -60,10 +60,9 @@ export const Products = () => {
         <ToastContainer className="p-3 position-fixed" position={"top-center"}>
           <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide>
             <Toast.Header closeButton={true}>
-              <strong className="me-auto">Bootstrap</strong>
-              <small>11 mins ago</small>
+              <strong className="me-auto">Done.</strong>
             </Toast.Header>
-            <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
+            <Toast.Body>Product added to cart.</Toast.Body>
           </Toast>
         </ToastContainer>
         <Container>
