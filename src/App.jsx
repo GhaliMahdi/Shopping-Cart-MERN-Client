@@ -6,6 +6,7 @@ import {Products} from "./pages/Products"
 import React from "react";
 import {Header} from "./components/Header";
 import { CartPage } from "./pages/CartPage";
+import { RegisterPage } from "./pages/RegisterPage";
 
 export const ShoppingCartContext = React.createContext();
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="/create-product" element={ <CreateProduct /> } />
             <Route path="/view-products" element={ <Products /> } />
             <Route path="/cart" element={ <CartPage /> } />
+            <Route path="/register" element={ <RegisterPage /> } />
         </Routes>
       </ShoppingCartContext.Provider>
     </div>
