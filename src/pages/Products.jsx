@@ -11,8 +11,8 @@ import { useContext } from "react";
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import { Link } from "react-router-dom";
-import { IsAdminHook } from "../hooks/IsAdminHook";
-import { IsLoggedIn } from "../hooks/IsLoggedInHook";
+import { useIsAdminHook } from "../hooks/IsAdminHook";
+import { useIsLoggedIn } from "../hooks/IsLoggedInHook";
 
 
 const NUM_OF_COLUMNS = 3;
@@ -38,6 +38,8 @@ export const Products = () => {
     const [search, setSearch] = useState('');
     const [cart, setCart] = useContext(ShoppingCartContext);
     const [showToast, setShowToast] = useState(false);
+    const logged = useIsLoggedIn();
+    const admin = useIsAdminHook();
 
     const addProductToCart = (product) => {
         setCart([...cart, {...product}]);
@@ -93,8 +95,8 @@ export const Products = () => {
                     .map((product) => 
                     ( 
                         <ProductCard
-                            isLoggedIn={IsLoggedIn}
-                            isAdmin={IsAdminHook}
+                            isLoggedIn={logged}
+                            isAdmin={admin}
                             key={product._id} 
                             product={product} 
                             addProductToCart={addProductToCart} 
