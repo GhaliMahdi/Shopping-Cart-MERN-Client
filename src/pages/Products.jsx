@@ -10,11 +10,14 @@ import { ShoppingCartContext, UserContext } from "../App";
 import { useContext } from "react";
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
+import { Link } from "react-router-dom";
+import { IsAdminHook } from "../hooks/IsAdminHook";
+import { IsLoggedIn } from "../hooks/IsLoggedInHook";
 
 
 const NUM_OF_COLUMNS = 3;
 
-const ProductCard = ({isLoggedIn, product, addProductToCart}) => {
+const ProductCard = ({isAdmin, isLoggedIn, product, addProductToCart}) => {
     return (
         <Card key={product._id} className="mb-4">
             <Card.Body>
@@ -23,18 +26,18 @@ const ProductCard = ({isLoggedIn, product, addProductToCart}) => {
                         {product.description}
                     </Card.Text>
                     {isLoggedIn && <Button variant="primary" onClick={() => addProductToCart(product)}>Add to cart</Button>}
+                    {isAdmin && <Link to={`/products/${product._id}/edit`}>Edit</Link>}
             </Card.Body>
         </Card>         
     )
 }
+
 export const Products = () => {
     
     const [products, setProducts] = useState([]);
     const [search, setSearch] = useState('');
     const [cart, setCart] = useContext(ShoppingCartContext);
     const [showToast, setShowToast] = useState(false);
-    const [user] = useContext(UserContext);
-
 
     const addProductToCart = (product) => {
         setCart([...cart, {...product}]);
@@ -90,7 +93,8 @@ export const Products = () => {
                     .map((product) => 
                     ( 
                         <ProductCard
-                            isLoggedIn={!!user.token}
+                            isLoggedIn={IsLoggedIn}
+                            isAdmin={IsAdminHook}
                             key={product._id} 
                             product={product} 
                             addProductToCart={addProductToCart} 
