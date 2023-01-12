@@ -9,6 +9,7 @@ import { useContext } from 'react';
 import { UserContext } from '../App';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const DEFAULT_FORM_OBJECT = {
     name: "",
@@ -20,13 +21,20 @@ export const  EditProduct = () => {
     const [form, setForm] = useState(DEFAULT_FORM_OBJECT)
     const [user] = useContext(UserContext);
     const { prodId } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getProduct = async () => {
             const { data: product } = await axios.get(
                 `http://localhost:3000/products/${prodId}`
               );
+            setForm({
+                name: product.name,
+                cost: product.cost,
+                description: product.description,
+            });
         };
+        
         getProduct();
     }, [])
 
@@ -37,13 +45,23 @@ export const  EditProduct = () => {
         })
     };
 
+    const UpdateProduct = async (e) => {
+        e.preventDefault();
+        await axios.patch(`http://localhost:3000/products/${prodId}`, form, {
+            headers: {
+                Authorization: `Bearer ${user.token}`,
+            },
+        });
+        navigate("/view-products")
+    };
+
   return (
     <Container>
         <Row>
             <Col></Col>
             <Col xs={8}>
-            <h2>Create Product</h2>
-            <Form >
+            <h2>Edit Product</h2>
+            <Form onSubmit={UpdateProduct}>
             <Form.Group className="mb-3" controlId="formName">
                 <Form.Label>Name</Form.Label>
                 <Form.Control 
@@ -74,7 +92,7 @@ export const  EditProduct = () => {
                     value={form.description} />
             </Form.Group>
             <Button variant="primary" type="submit">
-                Submit
+                Edit
             </Button>
             </Form>
             </Col>
