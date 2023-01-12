@@ -4,6 +4,7 @@ import { Home } from "./Home";
 import { useIsAdminHook } from "./hooks/IsAdminHook";
 import { CartPage } from "./pages/CartPage";
 import { CreateProduct } from "./pages/createProduct";
+import { EditProduct } from "./pages/EditProduct";
 import { LoginPage } from "./pages/LoginPage";
 import { LogoutPage } from "./pages/LogoutPage";
 import Products from "./pages/Products";
@@ -17,6 +18,7 @@ export const AppRouter = () => {
                     <Route path="/" element={ <Home /> } />
                     {isAdmin && <Route path="/create-product" element={ <CreateProduct /> } /> }
                     <Route path="/view-products" element={ <Products /> } />
+                    <Route path="/products/:prodId/edit" element={ <EditProduct /> } />
                     <Route path="/cart" element={ <CartPage /> } />
                     <Route path="/register" element={ <RegisterPage /> } />
                     <Route path="/login" element={ <LoginPage /> } />
